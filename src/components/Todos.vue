@@ -1,25 +1,43 @@
 <template>
   <div>
-      <h3>Todos</h3>
-      <div class="todos">
-          <div v-for="todo in allTodos" v-bind:key="todo.id" class="todo">
-            <p>{{todo.title}}</p>
-          </div>
+    <h3>Todos</h3>
+    <div class="todos">
+      <div v-for="todo in allTodos" v-bind:key="todo.id" class="todo">
+        <p>{{todo.title}}</p>
       </div>
+    </div>
   </div>
 </template>
 
 <script>
-
-import { mapGetters } from 'vuex';             //This gets the getter from vuex-Store
+import { mapGetters, mapActions } from "vuex"; //This gets the getter and actions from vuex-Store
 
 export default {
- name:"Todos",
- computed: mapGetters(['allTodos'])                  //For any complex logic, you should use a computed property.
-                                                    //mapGetters(['allTodos']) allows us to use this getters out of the module
-}
+  name: "Todos",
+  methods: {
+    ...mapActions(["fetchTodos"]),
+  },
+  computed: mapGetters(["allTodos"]),
+  created() {
+    this.fetchTodos();
+  } //created() => is a lifecycle hook beforeMount
+  //mapGetters(['allTodos']) allows us to use this getters out of the module
+};
 </script>
 
-<style>
-
+<style scoped>
+.todos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
+}
+.todo {
+  border: 1px solid #ccc;
+  background: #41b883;
+  padding: 1rem;
+  border-radius: 5px;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+}
 </style>

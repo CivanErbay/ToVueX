@@ -1,16 +1,7 @@
 import axios from 'axios';
 
 const state = {
-    todos: [
-    {
-        id: 1,
-        title: "Todo One"
-    },
-    {
-        id: 2,
-        title: "Todo Two"
-    }
-    ]
+    todos: []
 };
 
 const getters = {
@@ -19,9 +10,16 @@ const getters = {
     }
 };
 
-const actions = {};
+const actions = {
+    async fetchTodos({ commit }) {          //We commit a mutation
+        const response = await axios.get('https://jsonplaceholder.typicode.com/todos')
+        commit('setTodos', response.data) //first param = mutation we want to call, second param = what we want to pass in
+    }
+};
 
-const mutations = {}; 
+const mutations = {
+    setTodos: (state, todos) => (state.todos = todos )
+}; 
 
 export default {
     state,
