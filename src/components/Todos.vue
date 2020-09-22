@@ -4,7 +4,7 @@
     <div class="todos">
       <div v-for="todo in allTodos" v-bind:key="todo.id" class="todo">
         <p>{{todo.title}}</p>
-        <img class="todos__delete-icon" src="../assets/delete.svg" alt="">
+        <img @click="deleteTodo(todo.id)" class="todos__delete-icon" src="../assets/delete.svg" alt="">
       </div>
     </div>
   </div>
@@ -16,7 +16,7 @@ import { mapGetters, mapActions } from "vuex"; //This gets the getter and action
 export default {
   name: "Todos",
   methods: {
-    ...mapActions(["fetchTodos"]),
+    ...mapActions(["fetchTodos", "deleteTodo"]),
   },
   computed: mapGetters(["allTodos"]),
   created() {
