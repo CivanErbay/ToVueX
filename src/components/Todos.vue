@@ -4,6 +4,7 @@
     <div class="todos">
       <div v-for="todo in allTodos" v-bind:key="todo.id" class="todo">
         <p>{{todo.title}}</p>
+        <img class="todos__delete-icon" src="../assets/delete.svg" alt="">
       </div>
     </div>
   </div>
@@ -39,5 +40,13 @@ export default {
   text-align: center;
   position: relative;
   cursor: pointer;
+}
+.todos__delete-icon {
+    height: 3vh;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: #fff;
+    cursor: pointer;
 }
 </style>
