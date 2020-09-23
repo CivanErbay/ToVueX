@@ -12,7 +12,9 @@
     </div>
     <div class="todos">
       <div @dblclick="onDblClick(todo)" v-for="todo in allTodos" v-bind:key="todo.id" class="todo" v-bind:class="{'is-complete':todo.completed}">
-        <p>{{todo.title}}</p>
+        <img @click="editTodo(todo.id, todo)" class="todos__edit-icon" src="../assets/edit.svg" alt="">
+        <p v-if="editId != todo.id">{{todo.title}}</p>
+        <input v-model="editContent" v-if="editId == todo.id" type="text">
         <img @click="deleteTodo(todo.id)" class="todos__delete-icon" src="../assets/delete.svg" alt="">
       </div>
     </div>
@@ -24,6 +26,12 @@ import { mapGetters, mapActions } from "vuex"; //This gets the getter and action
 
 export default {
   name: "Todos",
+  data() {
+    return {
+      editId: undefined,
+      editContent: "",
+    }
+  },
   methods: {
     ...mapActions(["fetchTodos", "deleteTodo", "updateTodo"]),
     onDblClick(todo) {
@@ -32,8 +40,16 @@ export default {
         title: todo.title,
         completed: !todo.completed,
       }
-
       this.updateTodo(updTodo)
+    },
+    editTodo(id,todo) {
+      this.editId = this.editId !== id ? id : undefined;
+      const edtTodo = {
+        id: todo.id,
+        title: this.editContent,
+        completed: todo.completed
+      }
+      this.updateTodo(edtTodo)
     }
   },
   computed: mapGetters(["allTodos"]),
@@ -64,6 +80,13 @@ export default {
     position: absolute;
     bottom: 10px;
     right: 10px;
+    color: #fff;
+    cursor: pointer;
+}.todos__edit-icon {
+    height: 3vh;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
     color: #fff;
     cursor: pointer;
 }

@@ -50,6 +50,12 @@ const actions = {
     );
     commit("updateTodo", response.data);
   },
+
+ /*  async editTodo({ commit }, edtTodo) {
+      const response = await axios.put(`https://jsonplaceholder.typicode.com/todos/${updTodo.id}`,
+      edtTodo);
+
+  } */
 };
 
 const mutations = {
@@ -57,13 +63,13 @@ const mutations = {
   newTodo: (state, todo) => state.todos.unshift(todo),
   removeTodo: (state, id) =>
     (state.todos = state.todos.filter((todo) => todo.id !== id)), //returns every todo out of state.todos in which the id is not the same. The matching id pair is NOT part of the filtered array
-
   updateTodo: (state, updTodo) => {
     const index = state.todos.findIndex((todo) => todo.id === updTodo.id);
     if (index !== -1) {
       state.todos.splice(index, 1, updTodo);
     }
   },
+  
 };
 
 export default {
