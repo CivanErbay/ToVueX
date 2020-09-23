@@ -50,6 +50,7 @@ export default {
         completed: todo.completed
       }
       this.updateTodo(edtTodo)
+      this.editContent = ""
     }
   },
   computed: mapGetters(["allTodos"]),
